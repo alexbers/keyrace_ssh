@@ -1,0 +1,11 @@
+--- tmux-1.9a-orig/resize.c      2014-02-23 02:48:37.000000000 +0600
++++ tmux-1.9a-mod/resize.c    2014-04-18 20:54:06.000000000 +0600
+@@ -58,7 +58,7 @@
+                ssx = ssy = UINT_MAX;
+                for (j = 0; j < ARRAY_LENGTH(&clients); j++) {
+                        c = ARRAY_ITEM(&clients, j);
+-                       if (c == NULL || c->flags & CLIENT_SUSPENDED)
++                       if (c == NULL || c->flags & (CLIENT_SUSPENDED | CLIENT_READONLY))
+                                continue;
+                        if (c->session == s) {
+                                if (c->tty.sx < ssx)
