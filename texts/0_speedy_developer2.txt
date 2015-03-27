@@ -1,0 +1,18 @@
+cd /home/kde
+svn checkout http://kde.org/svn/kde
+cd kde
+vim kde.c
+svn add kde.c
+svn commit -m 'this is very long description of my commit'
+svn update
+svn rename kde.c gnome.c
+svn status
+vim gnome.c
+svn commit -m 'this is another very long description of my commit'
+svn update
+svn blame gnome.c
+vim Makefile
+./configure --prefix=/opt/gnome
+make
+make install
+/opt/gnome/bin/gnome

@@ -1,0 +1,15 @@
+cd /etc/openvpn/
+less openvpn.conf
+netstat -tlnp
+passwd vpnuser
+openvpn openvpn.conf
+iptables -t nat -A POSTROUTING -o venet0 -j MASQUERADE
+cd /etc/openvpn/easy-rsa/
+source vars
+./build-key ivanov
+cd keys
+ls -l
+tar cf /var/www/localhost/htdocs/ivanov.tar ivanov.key ivanov.crt ca.crt 
+rm /var/www/localhost/ivanov.tar
+uptime
+reboot

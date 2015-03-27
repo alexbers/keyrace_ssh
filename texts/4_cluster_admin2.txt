@@ -1,0 +1,18 @@
+yum search qt
+srun sleep 1h &
+scontrol show job 171668
+srun -p debug --mem 13000 hostname
+mpicc bandwidth.c -o band
+./band
+salloc -p tesla --mem=13000
+screen
+screen -r
+nvidia-smi
+srun -p debug hostname
+sinfo
+getent passwd | grep Ivanov
+cd /etc/slurm/
+cat job_submit.lua | grep u
+yum install netcdf
+sudo -i
+find -name libmpi_f90.so /opt/

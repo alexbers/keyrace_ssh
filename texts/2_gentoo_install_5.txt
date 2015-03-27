@@ -1,0 +1,10 @@
+nano -w /etc/inittab
+emerge sys-boot/grub
+grub2-install /dev/sda
+grub2-mkconfig -o /boot/grub/grub.cfg
+reboot
+useradd -m -G users,wheel,audio -s /bin/bash bay
+passwd bay
+rm /stage3-*.tar.bz2*
+emerge --sync -q
+emerge -up --deep world --tree --jobs=4

@@ -1,0 +1,27 @@
+uname -a
+id
+cat /proc/cpuinfo
+cat /proc/meminfo
+vmstat
+nfsiostat
+ifconfig
+route -n
+ping 8.8.8.8
+htop
+top
+iotop
+ps aux | grep bay
+cat /etc/passwd
+echo "This is just a simple test" > /tmp/test.txt
+mount /dev/sda5 /boot
+cd /
+ls -l
+cd src
+ls -l
+cd linux
+ls -l
+make menuconfig
+make
+make modules_install
+cp arch/x86/boot/bzImage /boot/kernel-3.14.0
+reboot

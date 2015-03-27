@@ -1,0 +1,14 @@
+ls /usr/share/zoneinfo
+echo "Asia/Yekaterinburg" > /etc/timezone
+emerge --config sys-libs/timezone-data
+nano -w /etc/locale.gen
+locale-gen
+env-update && source /etc/profile
+emerge gentoo-sources
+cd /usr/src/linux
+make menuconfig
+make && make modules_install
+cp arch/x86_64/boot/bzImage /boot/kernel-3.14.0-gentoo
+nano -w /etc/fstab
+nano -w /etc/conf.d/hostname
+nano -w /etc/conf.d/net

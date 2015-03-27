@@ -1,0 +1,25 @@
+cd /home/user/myproj
+mkdir git
+cd git
+nano git.c
+nano Makefile
+make
+make install
+git init
+git config --global user.email linus@mail.com
+git add git.c Makefile
+git commit -m 'This is first version of my version control system'
+cd ..
+mkdir linux_kernel
+cd linux_kernel
+git init
+vim kernel.c
+git add kernel.c
+git commit -m 'This is first version of my new operating system'
+nano Makefile
+make
+make install
+git status
+git diff
+git add Makefile
+git commit -m 'This is a Makefile for my new operating system'

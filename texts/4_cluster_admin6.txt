@@ -1,0 +1,15 @@
+/sbin/iptables -L -n
+sacctmgr show user=u9999
+sreport cluster AccountUtilizationByUser
+sreport cluster UserUtilizationByAccount
+scontrol show partition
+cd /var/
+ls -l
+cd lib/dhcpd/
+ls -l
+less dhcpd.leases
+scontrol create reservation just_for_fun starttime=now endtime=2014-06-20T16:00:00 users=s0001,s0002,s0003,s0004,s0005 flags=ignore_jobs nodes=tesla[1-1000]
+cd /home
+for u in s0001 s0002 s0003 s0004 s0005; do mkdir $u; chown $u:users $u; done
+for u in s0001 s0002 s0003 s0004 s0005; do chmod 700 $u; done
+reboot

@@ -1,0 +1,14 @@
+ifconfig
+hostname
+uptime
+/etc/init.d/apache2 restart
+/etc/init.d/mysql start
+cd /var/log/
+ls
+cd mysql/
+cat mysqld.err
+nano /etc/mysql/my.cnf
+/etc/init.d/sshd restart
+mv /backup/sql.tar /var/www/localhost/
+/etc/init.d/nginx restart
+php /var/www/localhost/1337_setup.php

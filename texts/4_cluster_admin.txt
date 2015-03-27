@@ -1,0 +1,17 @@
+yum info htop
+cd /etc/yum.repos.d/
+cat epel.repo
+srun --version
+less /etc/slurm/slurm.conf
+cd /etc/modulefiles/
+ls
+cd openmpi
+ls
+cat gcc32
+man slurm.conf
+sudo -i
+srun -p tesla --gres=gpu:4 lapw1  1
+sacct -l -S 2013-02-04 | grep tesla | less
+export SACCT_FORMAT="jobid,user,account,cluster"
+sacct -b --nodelist=tesla[23-26] -S 2014-04-01
+squeue -u u9999

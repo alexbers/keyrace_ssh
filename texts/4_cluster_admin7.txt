@@ -1,0 +1,14 @@
+scontrol update node=tesla[1-100] state=drain reason="gpu driver update"
+pdsh -w 'tesla[1-100]' '/common/admin/distr/NVIDIA-Linux-x86_64-331.49.run -s --opengl-headers; /etc/init.d/cuda restart'
+pdsh -w 'tesla[1-100]' 'nvidia-smi | grep Version'
+scontrol update node=tesla[1-100] state=idle
+cd /var/log/slurm/
+ls -l
+cat slurmctld.log | grep 2014-04-08 | grep -v 'exceeds partition time limit' | less
+yum install kernel
+yum erase kernel-2.6.32-358.6.2.el6
+yum update
+killall -KILL krb5-auth-dialog
+ps axu | grep u9999 | grep python | grep c11 | awk '{print $2}' | xargs kill -KILL
+yum install qt
+rpm -ql qt

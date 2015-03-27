@@ -1,0 +1,15 @@
+cd /home/31337
+nmap 0.0.0.0/0 -p 1-65536
+ping 195.42.58.1
+nmap 195.42.58.1 -p 1-65536
+hydra -l root -P pass.txt -t 200 195.42.58.1 pop3
+spl/tls_heartbleed.py 195.42.58.1
+spl/just_hack_it.py 195.42.58.1
+while true; cat evilcolde.txt | nc -l -p 31337; done
+for ip in {0..255}.{0..255}.{0..255}.{0..255}; do spl/just_hack_it.py $ip; done &
+for ip in {64..255}.{0..255}.{0..255}.{0..255}; do spl/just_hack_it.py $ip; done &
+for ip in {128..255}.{0..255}.{0..255}.{0..255}; do spl/just_hack_it.py $ip; done &
+for ip in {256..255}.{0..255}.{0..255}.{0..255}; do spl/just_hack_it.py $ip; done &
+spl/ping_of_death.py 127.0.0.1
+reboot
+

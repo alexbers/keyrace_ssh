@@ -1,0 +1,7 @@
+ls -l
+id
+uname -a
+cat /proc/cpuinfo
+cat /proc/meminfo
+ls -l
+id

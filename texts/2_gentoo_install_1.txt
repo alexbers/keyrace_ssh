@@ -1,0 +1,16 @@
+passwd
+/etc/init.d/sshd start
+modprobe 8139too
+ifconfig
+dhcpcd eth0
+ping -c 3 ya.ru
+fdisk /dev/sda
+mkfs.ext2 /dev/sda2
+mkfs.ext4 /dev/sda4
+mkswap /dev/sda3
+swapon /dev/sda3
+mount /dev/sda4 /mnt/gentoo
+mkdir /mnt/gentoo/boot
+mount /dev/sda2 /mnt/gentoo/boot
+date
+date 041816002014

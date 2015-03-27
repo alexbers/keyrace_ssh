@@ -1,0 +1,21 @@
+find /opt/ -name libmpi_f90.so
+squeue -l
+cd benchmarks
+ls -l
+cd linpack
+ls -l
+cd gpu_ic2v/
+ls -l
+source prepare.sh 
+nano HPL.dat
+/opt/openmpi/intel/bin/mpirun -mca pls_rsh_agent ssh run_linpack
+/opt/openmpi/intel/bin/mpirun -mca pls_rsh_agent ssh -n 8 run_linpack
+cd /opt
+cd benchmarks
+cd nbench-byte
+ls -l
+./nbench
+perl -e 'while(1){}'
+ps -p $$ -o ppid=
+ssh tesla45
+srun -w tesla45 sleep 1h

@@ -1,0 +1,16 @@
+cd /mnt/gentoo
+links http://www.gentoo.org/main/ru/mirrors.xml
+tar xvjpf stage3-amd64-20140403.tar.bz2
+nano -w /mnt/gentoo/etc/portage/make.conf
+cp -L /etc/resolv.conf /mnt/gentoo/etc/
+mount -t proc proc /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+chroot /mnt/gentoo /bin/bash
+source /etc/profile
+export PS1="(chroot) $PS1"
+emerge --sync --quiet
+eselect news list
+eselect news read
+eselect profile list
+eselect profile set 2

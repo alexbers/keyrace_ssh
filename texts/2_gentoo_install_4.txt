@@ -1,0 +1,17 @@
+cd /etc/init.d
+ln -s net.lo net.eth0
+rc-update add net.eth0 default
+nano -w /etc/hosts
+emerge pcmciautils
+passwd
+nano -w /etc/rc.conf
+nano -w /etc/conf.d/keymaps
+nano -w /etc/conf.d/hwclock
+emerge syslog-ng
+rc-update add syslog-ng default
+emerge cronie
+rc-update add cronie default
+crontab /etc/crontab
+emerge mlocate
+emerge dhcpcd ppp
+rc-update add sshd default

@@ -1,0 +1,17 @@
+sacct
+cd /opt/intel/mkl/10.1.0.015/benchmarks/mp_linpack/bin/em64t/
+ls -l
+ldd xhpl
+orterun ./xhpl
+less HPL.dat
+wget 'http://xxx.com/l_lpk_p_11.1.2.005.tgz'
+tar xf l_lpk_p_11.1.2.005.tgz
+cd linpack_11.1.2/
+icc --version
+cd mp_linpack/
+nano Make.intel64
+make arch=intel64
+locate libmkl_core.a
+ldd xhpl
+tar czf intel_openmpi.tar.gz /opt/openmpi/intel
+scp intel_openmpi.tar.gz alex@194.68.155.77:

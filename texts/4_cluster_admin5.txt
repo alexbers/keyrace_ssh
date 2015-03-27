@@ -1,0 +1,15 @@
+cp /home/user/.Xauthority /root
+/ansys_inc/shared_files/licensing/lic_admin/anslic_admin
+cat license.dat
+less ansysli_server.log
+find v145 -type f | perl -nle '/\/help\/|\.[s]o$/ || print "\"$_\""' | xargs grep MPI_REMSH
+vim /common/admin/stat/JobsList.pm
+scontrol show node=tesla40
+scontrol update node=tesla31-46 state=drain reason="GPU maint"
+cd /common/admin/build/
+ls -l
+cd openmpi-1.6.5
+make clean
+CC=icc CXX=icpc F77=ifort FC=ifort ./configure --prefix=/opt/openmpi/intel/ --enable-static
+make -j 16
+make install
