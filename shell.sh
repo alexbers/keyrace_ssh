@@ -3,6 +3,9 @@
 # change directory to the script location
 cd "$( dirname "${BASH_SOURCE[0]}")"
 
+ulimit -v 30000
+ulimit -t 30
+
 while true; do
 	echo "Welcome to the game!"
 	if [ -f gamestarted ]; then
