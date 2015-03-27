@@ -2,11 +2,11 @@
 
 cd "$( dirname "${BASH_SOURCE[0]}")"
 
-killall tmux 2>/dev/null
+./killall -w tmux 2>/dev/null
 
-rm progress/* 2>/dev/null
-rm gameprepare 2>/dev/null
-rm gamestarted 2>/dev/null
-rm text.txt 2>/dev/null
+rm -f progress/* 2>/dev/null
+rm -f gameprepare 2>/dev/null
+rm -f gamestarted 2>/dev/null
+rm -f text.txt 2>/dev/null
 
 echo "The game is stopped"
