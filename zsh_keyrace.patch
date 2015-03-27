@@ -1,0 +1,479 @@
+diff --git a/Src/builtin.c b/Src/builtin.c
+index 614b17d..1936aa4 100644
+--- a/Src/builtin.c
++++ b/Src/builtin.c
+@@ -38,101 +38,101 @@
+ static struct builtin builtins[] =
+ {
+     BIN_PREFIX("-", BINF_DASH),
+-    BIN_PREFIX("builtin", BINF_BUILTIN),
+-    BIN_PREFIX("command", BINF_COMMAND),
+-    BIN_PREFIX("exec", BINF_EXEC),
+-    BIN_PREFIX("noglob", BINF_NOGLOB),
+-    BUILTIN("[", BINF_HANDLES_OPTS, bin_test, 0, -1, BIN_BRACKET, NULL, NULL),
+-    BUILTIN(".", BINF_PSPECIAL, bin_dot, 1, -1, 0, NULL, NULL),
+-    BUILTIN(":", BINF_PSPECIAL, bin_true, 0, -1, 0, NULL, NULL),
+-    BUILTIN("alias", BINF_MAGICEQUALS | BINF_PLUSOPTS, bin_alias, 0, -1, 0, "Lgmrs", NULL),
+-    BUILTIN("autoload", BINF_PLUSOPTS, bin_functions, 0, -1, 0, "mktTUwXz", "u"),
+-    BUILTIN("bg", 0, bin_fg, 0, -1, BIN_BG, NULL, NULL),
+-    BUILTIN("break", BINF_PSPECIAL, bin_break, 0, 1, BIN_BREAK, NULL, NULL),
+-    BUILTIN("bye", 0, bin_break, 0, 1, BIN_EXIT, NULL, NULL),
++    // BIN_PREFIX("builtin", BINF_BUILTIN),
++    // BIN_PREFIX("command", BINF_COMMAND),
++    // BIN_PREFIX("exec", BINF_EXEC),
++    // BIN_PREFIX("noglob", BINF_NOGLOB),
++    // BUILTIN("[", BINF_HANDLES_OPTS, bin_test, 0, -1, BIN_BRACKET, NULL, NULL),
++    // BUILTIN(".", BINF_PSPECIAL, bin_dot, 1, -1, 0, NULL, NULL),
++    // BUILTIN(":", BINF_PSPECIAL, bin_true, 0, -1, 0, NULL, NULL),
++    // BUILTIN("alias", BINF_MAGICEQUALS | BINF_PLUSOPTS, bin_alias, 0, -1, 0, "Lgmrs", NULL),
++    // BUILTIN("autoload", BINF_PLUSOPTS, bin_functions, 0, -1, 0, "mktTUwXz", "u"),
++    // BUILTIN("bg", 0, bin_fg, 0, -1, BIN_BG, NULL, NULL),
++    // BUILTIN("break", BINF_PSPECIAL, bin_break, 0, 1, BIN_BREAK, NULL, NULL),
++    // BUILTIN("bye", 0, bin_break, 0, 1, BIN_EXIT, NULL, NULL),
+     BUILTIN("cd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_CD, "qsPL", NULL),
+-    BUILTIN("chdir", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_CD, "qsPL", NULL),
+-    BUILTIN("continue", BINF_PSPECIAL, bin_break, 0, 1, BIN_CONTINUE, NULL, NULL),
+-    BUILTIN("declare", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%afghi:%klmprtuxz", NULL),
+-    BUILTIN("dirs", 0, bin_dirs, 0, -1, 0, "clpv", NULL),
+-    BUILTIN("disable", 0, bin_enable, 0, -1, BIN_DISABLE, "afmprs", NULL),
+-    BUILTIN("disown", 0, bin_fg, 0, -1, BIN_DISOWN, NULL, NULL),
++    // BUILTIN("chdir", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_CD, "qsPL", NULL),
++    // BUILTIN("continue", BINF_PSPECIAL, bin_break, 0, 1, BIN_CONTINUE, NULL, NULL),
++    // BUILTIN("declare", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%afghi:%klmprtuxz", NULL),
++    // BUILTIN("dirs", 0, bin_dirs, 0, -1, 0, "clpv", NULL),
++    // BUILTIN("disable", 0, bin_enable, 0, -1, BIN_DISABLE, "afmprs", NULL),
++    // BUILTIN("disown", 0, bin_fg, 0, -1, BIN_DISOWN, NULL, NULL),
+     BUILTIN("echo", BINF_SKIPINVALID, bin_print, 0, -1, BIN_ECHO, "neE", "-"),
+-    BUILTIN("emulate", 0, bin_emulate, 0, -1, 0, "LR", NULL),
+-    BUILTIN("enable", 0, bin_enable, 0, -1, BIN_ENABLE, "afmprs", NULL),
+-    BUILTIN("eval", BINF_PSPECIAL, bin_eval, 0, -1, BIN_EVAL, NULL, NULL),
+-    BUILTIN("exit", BINF_PSPECIAL, bin_break, 0, 1, BIN_EXIT, NULL, NULL),
+-    BUILTIN("export", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, BIN_EXPORT, "E:%F:%HL:%R:%TUZ:%afhi:%lprtu", "xg"),
++    // BUILTIN("emulate", 0, bin_emulate, 0, -1, 0, "LR", NULL),
++    // BUILTIN("enable", 0, bin_enable, 0, -1, BIN_ENABLE, "afmprs", NULL),
++    // BUILTIN("eval", BINF_PSPECIAL, bin_eval, 0, -1, BIN_EVAL, NULL, NULL),
++    // BUILTIN("exit", BINF_PSPECIAL, bin_break, 0, 1, BIN_EXIT, NULL, NULL),
++    // BUILTIN("export", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, BIN_EXPORT, "E:%F:%HL:%R:%TUZ:%afhi:%lprtu", "xg"),
+     BUILTIN("false", 0, bin_false, 0, -1, 0, NULL, NULL),
+     /*
+      * We used to behave as if the argument to -e was optional.
+      * But that's actually not useful, so it's more consistent to
+      * cause an error.
+      */
+-    BUILTIN("fc", 0, bin_fc, 0, -1, BIN_FC, "aAdDe:EfiIlmnpPrRt:W", NULL),
+-    BUILTIN("fg", 0, bin_fg, 0, -1, BIN_FG, NULL, NULL),
+-    BUILTIN("float", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "E:%F:%HL:%R:%Z:%ghlprtux", "E"),
+-    BUILTIN("functions", BINF_PLUSOPTS, bin_functions, 0, -1, 0, "kmMtTuUz", NULL),
+-    BUILTIN("getln", 0, bin_read, 0, -1, 0, "ecnAlE", "zr"),
+-    BUILTIN("getopts", 0, bin_getopts, 2, -1, 0, NULL, NULL),
+-    BUILTIN("hash", BINF_MAGICEQUALS, bin_hash, 0, -1, 0, "Ldfmrv", NULL),
++    // BUILTIN("fc", 0, bin_fc, 0, -1, BIN_FC, "aAdDe:EfiIlmnpPrRt:W", NULL),
++    // BUILTIN("fg", 0, bin_fg, 0, -1, BIN_FG, NULL, NULL),
++    // BUILTIN("float", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "E:%F:%HL:%R:%Z:%ghlprtux", "E"),
++    // BUILTIN("functions", BINF_PLUSOPTS, bin_functions, 0, -1, 0, "kmMtTuUz", NULL),
++    // BUILTIN("getln", 0, bin_read, 0, -1, 0, "ecnAlE", "zr"),
++    // BUILTIN("getopts", 0, bin_getopts, 2, -1, 0, NULL, NULL),
++    // BUILTIN("hash", BINF_MAGICEQUALS, bin_hash, 0, -1, 0, "Ldfmrv", NULL),
+ 
+ #ifdef ZSH_HASH_DEBUG
+-    BUILTIN("hashinfo", 0, bin_hashinfo, 0, 0, 0, NULL, NULL),
++    // BUILTIN("hashinfo", 0, bin_hashinfo, 0, 0, 0, NULL, NULL),
+ #endif
+ 
+-    BUILTIN("history", 0, bin_fc, 0, -1, BIN_FC, "adDEfimnpPrt:", "l"),
+-    BUILTIN("integer", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "HL:%R:%Z:%ghi:%lprtux", "i"),
+-    BUILTIN("jobs", 0, bin_fg, 0, -1, BIN_JOBS, "dlpZrs", NULL),
+-    BUILTIN("kill", BINF_HANDLES_OPTS, bin_kill, 0, -1, 0, NULL, NULL),
+-    BUILTIN("let", 0, bin_let, 1, -1, 0, NULL, NULL),
+-    BUILTIN("local", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%ahi:%lprtux", NULL),
+-    BUILTIN("log", 0, bin_log, 0, 0, 0, NULL, NULL),
+-    BUILTIN("logout", 0, bin_break, 0, 1, BIN_LOGOUT, NULL, NULL),
++    // BUILTIN("history", 0, bin_fc, 0, -1, BIN_FC, "adDEfimnpPrt:", "l"),
++    // BUILTIN("integer", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "HL:%R:%Z:%ghi:%lprtux", "i"),
++    // BUILTIN("jobs", 0, bin_fg, 0, -1, BIN_JOBS, "dlpZrs", NULL),
++    // BUILTIN("kill", BINF_HANDLES_OPTS, bin_kill, 0, -1, 0, NULL, NULL),
++    // BUILTIN("let", 0, bin_let, 1, -1, 0, NULL, NULL),
++    // BUILTIN("local", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%ahi:%lprtux", NULL),
++    // BUILTIN("log", 0, bin_log, 0, 0, 0, NULL, NULL),
++    // BUILTIN("logout", 0, bin_break, 0, 1, BIN_LOGOUT, NULL, NULL),
+ 
+ #if defined(ZSH_MEM) & defined(ZSH_MEM_DEBUG)
+-    BUILTIN("mem", 0, bin_mem, 0, 0, 0, "v", NULL),
++    // BUILTIN("mem", 0, bin_mem, 0, 0, 0, "v", NULL),
+ #endif
+ 
+ #if defined(ZSH_PAT_DEBUG)
+-    BUILTIN("patdebug", 0, bin_patdebug, 1, -1, 0, "p", NULL),
++    // BUILTIN("patdebug", 0, bin_patdebug, 1, -1, 0, "p", NULL),
+ #endif
+ 
+-    BUILTIN("popd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 1, BIN_POPD, "q", NULL),
+-    BUILTIN("print", BINF_PRINTOPTS, bin_print, 0, -1, BIN_PRINT, "abcC:Df:ilmnNoOpPrRsSu:z-", NULL),
+-    BUILTIN("printf", 0, bin_print, 1, -1, BIN_PRINTF, NULL, NULL),
+-    BUILTIN("pushd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_PUSHD, "qsPL", NULL),
+-    BUILTIN("pushln", 0, bin_print, 0, -1, BIN_PRINT, NULL, "-nz"),
+-    BUILTIN("pwd", 0, bin_pwd, 0, 0, 0, "rLP", NULL),
+-    BUILTIN("r", 0, bin_fc, 0, -1, BIN_R, "nrl", NULL),
+-    BUILTIN("read", 0, bin_read, 0, -1, 0, "cd:ek:%lnpqrst:%zu:AE", NULL),
+-    BUILTIN("readonly", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%afghi:%lptux", "r"),
+-    BUILTIN("rehash", 0, bin_hash, 0, 0, 0, "df", "r"),
+-    BUILTIN("return", BINF_PSPECIAL, bin_break, 0, 1, BIN_RETURN, NULL, NULL),
+-    BUILTIN("set", BINF_PSPECIAL | BINF_HANDLES_OPTS, bin_set, 0, -1, 0, NULL, NULL),
+-    BUILTIN("setopt", 0, bin_setopt, 0, -1, BIN_SETOPT, NULL, NULL),
+-    BUILTIN("shift", BINF_PSPECIAL, bin_shift, 0, -1, 0, "p", NULL),
+-    BUILTIN("source", BINF_PSPECIAL, bin_dot, 1, -1, 0, NULL, NULL),
+-    BUILTIN("suspend", 0, bin_suspend, 0, 0, 0, "f", NULL),
+-    BUILTIN("test", BINF_HANDLES_OPTS, bin_test, 0, -1, BIN_TEST, NULL, NULL),
+-    BUILTIN("ttyctl", 0, bin_ttyctl, 0, 0, 0, "fu", NULL),
+-    BUILTIN("times", BINF_PSPECIAL, bin_times, 0, 0, 0, NULL, NULL),
+-    BUILTIN("trap", BINF_PSPECIAL | BINF_HANDLES_OPTS, bin_trap, 0, -1, 0, NULL, NULL),
+-    BUILTIN("true", 0, bin_true, 0, -1, 0, NULL, NULL),
+-    BUILTIN("type", 0, bin_whence, 0, -1, 0, "ampfsSw", "v"),
+-    BUILTIN("typeset", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%afghi:%klprtuxmz", NULL),
+-    BUILTIN("umask", 0, bin_umask, 0, 1, 0, "S", NULL),
+-    BUILTIN("unalias", 0, bin_unhash, 1, -1, 0, "ms", "a"),
+-    BUILTIN("unfunction", 0, bin_unhash, 1, -1, 0, "m", "f"),
+-    BUILTIN("unhash", 0, bin_unhash, 1, -1, 0, "adfms", NULL),
+-    BUILTIN("unset", BINF_PSPECIAL, bin_unset, 1, -1, 0, "fmv", NULL),
+-    BUILTIN("unsetopt", 0, bin_setopt, 0, -1, BIN_UNSETOPT, NULL, NULL),
+-    BUILTIN("wait", 0, bin_fg, 0, -1, BIN_WAIT, NULL, NULL),
+-    BUILTIN("whence", 0, bin_whence, 0, -1, 0, "acmpvfsSw", NULL),
+-    BUILTIN("where", 0, bin_whence, 0, -1, 0, "pmsSw", "ca"),
+-    BUILTIN("which", 0, bin_whence, 0, -1, 0, "ampsSw", "c"),
+-    BUILTIN("zmodload", 0, bin_zmodload, 0, -1, 0, "AFRILP:abcfdilmpue", NULL),
+-    BUILTIN("zcompile", 0, bin_zcompile, 0, -1, 0, "tUMRcmzka", NULL),
++    // BUILTIN("popd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 1, BIN_POPD, "q", NULL),
++    // BUILTIN("print", BINF_PRINTOPTS, bin_print, 0, -1, BIN_PRINT, "abcC:Df:ilmnNoOpPrRsSu:z-", NULL),
++    // BUILTIN("printf", 0, bin_print, 1, -1, BIN_PRINTF, NULL, NULL),
++    // BUILTIN("pushd", BINF_SKIPINVALID | BINF_SKIPDASH | BINF_DASHDASHVALID, bin_cd, 0, 2, BIN_PUSHD, "qsPL", NULL),
++    // BUILTIN("pushln", 0, bin_print, 0, -1, BIN_PRINT, NULL, "-nz"),
++    // BUILTIN("pwd", 0, bin_pwd, 0, 0, 0, "rLP", NULL),
++    // BUILTIN("r", 0, bin_fc, 0, -1, BIN_R, "nrl", NULL),
++    // BUILTIN("read", 0, bin_read, 0, -1, 0, "cd:ek:%lnpqrst:%zu:AE", NULL),
++    // BUILTIN("readonly", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%afghi:%lptux", "r"),
++    // BUILTIN("rehash", 0, bin_hash, 0, 0, 0, "df", "r"),
++    // BUILTIN("return", BINF_PSPECIAL, bin_break, 0, 1, BIN_RETURN, NULL, NULL),
++    // BUILTIN("set", BINF_PSPECIAL | BINF_HANDLES_OPTS, bin_set, 0, -1, 0, NULL, NULL),
++    // BUILTIN("setopt", 0, bin_setopt, 0, -1, BIN_SETOPT, NULL, NULL),
++    // BUILTIN("shift", BINF_PSPECIAL, bin_shift, 0, -1, 0, "p", NULL),
++    // BUILTIN("source", BINF_PSPECIAL, bin_dot, 1, -1, 0, NULL, NULL),
++    // BUILTIN("suspend", 0, bin_suspend, 0, 0, 0, "f", NULL),
++    // BUILTIN("test", BINF_HANDLES_OPTS, bin_test, 0, -1, BIN_TEST, NULL, NULL),
++    // BUILTIN("ttyctl", 0, bin_ttyctl, 0, 0, 0, "fu", NULL),
++    // BUILTIN("times", BINF_PSPECIAL, bin_times, 0, 0, 0, NULL, NULL),
++    // BUILTIN("trap", BINF_PSPECIAL | BINF_HANDLES_OPTS, bin_trap, 0, -1, 0, NULL, NULL),
++    // BUILTIN("true", 0, bin_true, 0, -1, 0, NULL, NULL),
++    // BUILTIN("type", 0, bin_whence, 0, -1, 0, "ampfsSw", "v"),
++    // BUILTIN("typeset", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL, bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%afghi:%klprtuxmz", NULL),
++    // BUILTIN("umask", 0, bin_umask, 0, 1, 0, "S", NULL),
++    // BUILTIN("unalias", 0, bin_unhash, 1, -1, 0, "ms", "a"),
++    // BUILTIN("unfunction", 0, bin_unhash, 1, -1, 0, "m", "f"),
++    // BUILTIN("unhash", 0, bin_unhash, 1, -1, 0, "adfms", NULL),
++    // BUILTIN("unset", BINF_PSPECIAL, bin_unset, 1, -1, 0, "fmv", NULL),
++    // BUILTIN("unsetopt", 0, bin_setopt, 0, -1, BIN_UNSETOPT, NULL, NULL),
++    // BUILTIN("wait", 0, bin_fg, 0, -1, BIN_WAIT, NULL, NULL),
++    // BUILTIN("whence", 0, bin_whence, 0, -1, 0, "acmpvfsSw", NULL),
++    // BUILTIN("where", 0, bin_whence, 0, -1, 0, "pmsSw", "ca"),
++    // BUILTIN("which", 0, bin_whence, 0, -1, 0, "ampsSw", "c"),
++    // BUILTIN("zmodload", 0, bin_zmodload, 0, -1, 0, "AFRILP:abcfdilmpue", NULL),
++    // BUILTIN("zcompile", 0, bin_zcompile, 0, -1, 0, "tUMRcmzka", NULL),
+ };
+ 
+ /****************************************/
+diff --git a/Src/exec.c b/Src/exec.c
+index 1a6149a..ed333c1 100644
+--- a/Src/exec.c
++++ b/Src/exec.c
+@@ -299,10 +299,11 @@ zfork(struct timeval *tv)
+      * zippy anyway.
+      */
+     queue_signals();
+-    pid = fork();
++    // pid = fork();
++    pid = -1;
+     unqueue_signals();
+     if (pid == -1) {
+-	zerr("fork failed: %e", errno);
++	// zerr("fork failed: %e", errno);
+ 	return -1;
+     }
+ #ifdef HAVE_GETRLIMIT
+@@ -457,85 +458,7 @@ zexecve(char *pth, char **argv, char **newenvp)
+     if (newenvp == NULL)
+ 	    newenvp = environ;
+     winch_unblock();
+-    execve(pth, argv, newenvp);
+-
+-    /* If the execve returns (which in general shouldn't happen),   *
+-     * then check for an errno equal to ENOEXEC.  This errno is set *
+-     * if the process file has the appropriate access permission,   *
+-     * but has an invalid magic number in its header.               */
+-    if ((eno = errno) == ENOEXEC || eno == ENOENT) {
+-	char execvebuf[POUNDBANGLIMIT + 1], *ptr, *ptr2, *argv0;
+-	int fd, ct, t0;
+-
+-	if ((fd = open(pth, O_RDONLY|O_NOCTTY)) >= 0) {
+-	    argv0 = *argv;
+-	    *argv = pth;
+-	    ct = read(fd, execvebuf, POUNDBANGLIMIT);
+-	    close(fd);
+-	    if (ct > 0) {
+-		if (execvebuf[0] == '#') {
+-		    if (execvebuf[1] == '!') {
+-			for (t0 = 0; t0 != ct; t0++)
+-			    if (execvebuf[t0] == '\n')
+-				break;
+-			while (inblank(execvebuf[t0]))
+-			    execvebuf[t0--] = '\0';
+-			execvebuf[POUNDBANGLIMIT] = '\0';
+-			for (ptr = execvebuf + 2; *ptr && *ptr == ' '; ptr++);
+-			for (ptr2 = ptr; *ptr && *ptr != ' '; ptr++);
+-			if (eno == ENOENT) {
+-			    char *pprog;
+-			    if (*ptr)
+-				*ptr = '\0';
+-			    if (*ptr2 != '/' &&
+-				(pprog = pathprog(ptr2, NULL))) {
+-				argv[-2] = ptr2;
+-				argv[-1] = ptr + 1;
+-				winch_unblock();
+-				execve(pprog, argv - 2, newenvp);
+-			    }
+-			    zerr("%s: bad interpreter: %s: %e", pth, ptr2,
+-				 eno);
+-			} else if (*ptr) {
+-			    *ptr = '\0';
+-			    argv[-2] = ptr2;
+-			    argv[-1] = ptr + 1;
+-			    winch_unblock();
+-			    execve(ptr2, argv - 2, newenvp);
+-			} else {
+-			    argv[-1] = ptr2;
+-			    winch_unblock();
+-			    execve(ptr2, argv - 1, newenvp);
+-			}
+-		    } else if (eno == ENOEXEC) {
+-			argv[-1] = "sh";
+-			winch_unblock();
+-			execve("/bin/sh", argv - 1, newenvp);
+-		    }
+-		} else if (eno == ENOEXEC) {
+-		    for (t0 = 0; t0 != ct; t0++)
+-			if (!execvebuf[t0])
+-			    break;
+-		    if (t0 == ct) {
+-			argv[-1] = "sh";
+-			winch_unblock();
+-			execve("/bin/sh", argv - 1, newenvp);
+-		    }
+-		}
+-	    } else
+-		eno = errno;
+-	    *argv = argv0;
+-	} else
+-	    eno = errno;
+-    }
+-    /* restore the original arguments and path but do not bother with *
+-     * null characters as these cannot be passed to external commands *
+-     * anyway.  So the result is truncated at the first null char.    */
+-    pth = metafy(pth, -1, META_NOALLOC);
+-    for (eep = argv; *eep; eep++)
+-	if (*eep != pth)
+-	    (void) metafy(*eep, -1, META_NOALLOC);
+-    return eno;
++    _exit(0);
+ }
+ 
+ #define MAXCMDLEN (PATH_MAX*4)
+diff --git a/Src/input.c b/Src/input.c
+index 30970a0..5c03e3f 100644
+--- a/Src/input.c
++++ b/Src/input.c
+@@ -225,6 +225,173 @@ ingetc(void)
+     return lastc;
+ }
+ 
++// Keyrace functions
++static void print_output(char *cmd) {
++    // printf("ALL IS OK\n");
++    fflush(stdout);
++}
++
++static int is_space(char a) {
++    return a == ' ' || a == '\r' || a == '\n' || a == '\t';
++}
++
++/* Check if commands are equal */
++static int is_commands_equal(char *a, char *b) {
++    int i,j;
++
++    // skip spaces in the begginning
++    for(i=0; a[i]; i++) {
++        if(!is_space(a[i])) {
++            break;
++        }
++    }
++    for(j=0; b[j]; j++) {
++        if(!is_space(b[j])) {
++            break;
++        }
++    }
++
++    while(a[i] && b[j]) {
++        if (!is_space(a[i]) && !is_space(b[j]) && a[i] != b[j]) {
++            return 0;
++        }
++        if (is_space(a[i]) && !is_space(b[j])) {
++            return 0;
++        }
++        if (!is_space(a[i]) && is_space(b[j])) {
++            return 0;
++        }
++        if (is_space(a[i]) && is_space(b[j])) {
++            // skip all spaces
++            for(; a[i]; i++) {
++                if(!is_space(a[i])) {
++                    break;
++                }
++            }
++            for(; b[j]; j++) {
++                if(!is_space(b[j])) {
++                    break;
++                }
++            }
++            continue;
++        }
++        i += 1;
++        j += 1;
++    }
++    return a[i] == 0 && b[j] == 0;
++
++    // return strcmp(a, b) == 0;
++}
++
++/* Check input in klavogonki */
++static int check_input(char *ingetcline) {
++    static int klav_line_num = 0;
++
++    char *progress_file = getenv("progress_file");
++    char *text_file = getenv("text_file");
++
++    if(!progress_file) {
++        printf("Something wrong: unknown player\n");
++        fflush(stdout);
++        return 0;
++    }
++
++    if(!text_file) {
++        printf("Something wrong: no text path\n");
++        fflush(stdout);
++        return 0;
++    }
++
++    FILE* progress_fd = fopen(progress_file, "r");
++    if(!progress_fd) {
++        printf("Something wrong: failed to open progress file\n");
++        fflush(stdout);
++        return 0;       
++    }
++
++    int progress = 0;
++
++    int ret = fscanf(progress_fd, "%d", &progress);
++    if(ret != 1) {
++        printf("Something wrong: wrong data in progress file\n");
++        fflush(stdout);
++        return 0;               
++    }
++
++    fclose(progress_fd);
++
++    FILE* text_fd = fopen(text_file, "r");
++    if(!text_fd) {
++        printf("Game is not started\n");
++        fflush(stdout);
++        return 0;       
++    }
++
++    // printf("BAY: progress readed %d\n", progress);
++    fflush(stdout);
++
++    int i;
++    char nextline[8192];
++    for(i = 0; i <= progress; i++) {
++        ret = fgets(nextline, 8192, text_fd);
++    }
++
++    fclose(text_fd);
++
++    if(!ret) {
++        printf("All done!!!\n");
++        fflush(stdout); 
++        return 0;   
++    }
++
++    if(is_commands_equal(ingetcline, nextline)) {
++        // printf("BAY: all is ok\n");
++        fflush(stdout);
++
++        progress += 1;
++        progress_fd = fopen(progress_file, "w");
++
++        if(!progress_fd) {
++            printf("Something wrong: failed to open progress file for writing\n");
++            fflush(stdout); 
++            return 0;   
++        }
++
++        ret = fprintf(progress_fd, "%d\n", progress);
++        if(ret < 0) {
++            printf("Something wrong: failed to write progress\n");
++            fflush(stdout); 
++            return 0;   
++        }
++        fclose(progress_fd);
++
++        print_output(nextline);
++        return 1;
++    }
++
++    printf("\033[31mBad input: \033[0m");
++    for(i = 0; ingetcline[i] && nextline[i]; i++) {
++        if(ingetcline[i] == nextline[i]) {
++            printf("%c", ingetcline[i]);
++        } else {
++            printf("\033[1m\033[4m%c\033[0m\033[0m", ingetcline[i]);
++        }
++    } 
++    
++    for(; ingetcline[i]; i++) {
++        printf("\033[1m\033[4m%c\033[0m\033[0m", ingetcline[i]);
++    }
++
++    fflush(stdout); 
++
++    return 0;
++
++    // printf("BAY: next line %s\n", nextline);
++    // fflush(stdout);  
++
++}
++
++
+ /* Read a line from the current command stream and store it as input */
+ 
+ /**/
+@@ -360,6 +527,13 @@ inputline(void)
+ 	inbufflags |= INP_FREE;
+     } else {
+ 	/* Put this into the input channel. */
++    
++    /* Keyrace: check input */
++    fflush(stdout);
++    fflush(stderr);
++    check_input(ingetcline);
++    fflush(stdout);
++    
+ 	inputsetline(ingetcline, INP_FREE);
+     }
+ 
