@@ -101,6 +101,10 @@ text_file=$(readlink -f text.txt)
 # echo $text_file
 progress_file=$(readlink -f progress/${name})
 
+timestamp=$(date +%s)
+record_file=$(readlink -f rec/${name}_${timestamp}.rec)
+timing_file=$(readlink -f rec/${name}_${timestamp}.time)
+
 text_cycle="
 export LANG=en_US.UTF-8
 while true; do 
@@ -124,4 +128,4 @@ while true; do
 done
 "
 
-./tmux -f tmux.conf new-session -s "${name}" "${text_cycle}" \; set -a status off \; split-window -p 75 "progress_file='${progress_file}' text_file='${text_file}' name='${name}' PS1='${PS1}' ./zsh -o NO_GLOBAL_RCS -o NO_RCS" \; split-window -p 75 -d "./monitor.py"
+./tmux -f tmux.conf new-session -s "${name}" "${text_cycle}" \; set -a status off \; split-window -p 75 "progress_file='${progress_file}' text_file='${text_file}' name='${name}' PS1='${PS1}' script -q --timing='$timing_file' -c './zsh -o NO_GLOBAL_RCS -o NO_RCS' '$record_file'" \; split-window -p 75 -d "./monitor.py"
