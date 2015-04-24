@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 RESULTS_FILE = "results.txt"
-OUTPUT = "records.html"
 
 def main():
     data = []
