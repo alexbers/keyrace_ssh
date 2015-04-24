@@ -41,7 +41,7 @@ def main():
             chars_in_min = int((bytes_in_file / result) * 60)
 
             with open("results.txt", "a") as f:
-                f.write(str(int(time.time())) + " " + text_hash + " " + name + " " + str(chars_in_min))
+                f.write(str(int(time.time())) + " " + text_hash + " " + name + " " + str(chars_in_min) + "\n")
         except Exception:
             traceback.print_exc()
             continue
